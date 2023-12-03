@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8E4"
+    tools:context=".AuthActivity" >
+
+    <TextView
+        android:id="@+id/hello_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.081"
+        tools:ignore="MissingConstraints"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <EditText
+        android:id="@+id/email_input_auth"
+        style="@android:style/Widget.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:minHeight="50dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <EditText
+        android:id="@+id/pass_input_auth"
+        android:minHeight="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:width="150dp"
+        android:backgroundTint="#BF9D39"/>
+
+    <TextView
+        android:id="@+id/forgot_pass"
+        android:layout_width="151dp"
+        android:layout_height="19dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:width="200dp"
+        android:height="50dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/forgot"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <TextView
+        android:id="@+id/go_to_reg"
+        style="@style/Widget.Material3.SearchView.Prefix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:height="50dp"
+        android:contextClickable="true"
+        android:gravity="center"
+        android:hapticFeedbackEnabled="false"
+        android:text="Зарегистрироваться"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+</LinearLayout>

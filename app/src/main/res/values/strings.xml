@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">KooCBooK</string>
+    <string name="forgot">Забыли пароль?</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="login">Войти </string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="items_list_title">Рецепты</string>
+    <string name="my_recipes">Мои рецепты</string>
+    <string name="add_recipe">Добавить рецепт</string>
+    <string name="search">Поиск</string>
+    <string name="upload_image">Загрузить фото</string>
+    <string name="publicate">Опубликовать</string>
+    <string name="cook_time">Время приготовления</string>
+</resources>

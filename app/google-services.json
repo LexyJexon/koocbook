@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "478425902458",
+    "project_id": "koocbook-82b63",
+    "storage_bucket": "koocbook-82b63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478425902458:android:c8db8b57d4ad386f5bfac3",
+        "android_client_info": {
+          "package_name": "com.example.koocbook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSo_YMffh1qfsvNsTcIuyR3p3Ky-H_Lzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

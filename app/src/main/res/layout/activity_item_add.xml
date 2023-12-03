@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="#FFE59B"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:rotationX="0">
+
+    <ImageView
+        android:id="@+id/add_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/borsh"
+        />
+
+    <Button
+        android:id="@+id/upload_img_btn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="@string/upload_image"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/add_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/add_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/add_item_recipe_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="false"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="true"
+        android:overScrollMode="never"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:scrollIndicators="right"
+        android:scrollbarSize="8dp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/add_item_cook_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="false"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="true"
+        android:overScrollMode="never"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:scrollIndicators="right"
+        android:scrollbarSize="8dp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        android:textColor="#000000"
+        android:textColorHint="#332F2F"/>
+
+    <Button
+        android:id="@+id/add_item_btn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="@string/publicate"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+</LinearLayout>
