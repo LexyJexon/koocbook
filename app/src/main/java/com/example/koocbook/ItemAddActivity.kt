@@ -51,7 +51,6 @@ class ItemAddActivity: AppCompatActivity() {
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_add)
@@ -75,14 +74,30 @@ class ItemAddActivity: AppCompatActivity() {
         }
 
         addItemButton?.setOnClickListener {
+            publishItem()
+        }
+
+
+
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun publishItem(){
+        if(downloadUrl != null && title != null && description != null && recipe != null && cookTime != null && AuthActivity.CurrentUser.user != null){
             GlobalScope.launch(Dispatchers.IO) {
                 try {
+                    Log.d("LOG", downloadUrl!!)
+                    Log.d("LOG",title!!.text.toString())
+                    Log.d("LOG",description!!.text.toString())
+                    Log.d("LOG",recipe!!.text.toString())
+                    Log.d("LOG",cookTime!!.text.toString())
+                    Log.d("LOG", AuthActivity.CurrentUser.user!!.id.toString())
                     itemApi.createItem(
                         downloadUrl!!,
                         title!!.text.toString(),
                         description!!.text.toString(),
                         recipe!!.text.toString(),
-                        arrayOf(),
+                        listOf("sad0","asda"),
                         cookTime!!.text.toString().toInt(),
                         AuthActivity.CurrentUser.user!!.id
                     )
@@ -90,17 +105,15 @@ class ItemAddActivity: AppCompatActivity() {
                         showToast("Рецепт добавлен")
                     }
                 } catch (e: IOException) {
-                    withContext(Dispatchers.Main) {
-                        e.printStackTrace()
-                    }
+                    e.printStackTrace()
                 }
             }
+        }else {
+            Log.d("Null", downloadUrl.toString())
         }
-
-
-
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 101 && data != null && data.data != null){
@@ -108,7 +121,6 @@ class ItemAddActivity: AppCompatActivity() {
                 Log.d("MyLog", "Image uri : " + data.data)
                 image?.setImageURI(data.data)
                 uploadImage()
-
             }
         }
     }
@@ -135,7 +147,8 @@ class ItemAddActivity: AppCompatActivity() {
             imagesRef.downloadUrl.addOnSuccessListener { uri ->
                 downloadUrl = uri.toString()
                 // Получение ссылки на загруженное изображение (downloadUrl)
-                println("Ссылка на загруженное изображение: $downloadUrl")
+                Log.d("Image","Ссылка на загруженное изображение: $downloadUrl")
+                Toast.makeText(applicationContext, downloadUrl, Toast.LENGTH_SHORT).show()
             }.addOnFailureListener{
                 val message = "Ошибка при получении URL загруженного файла: ${it.message}"
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()

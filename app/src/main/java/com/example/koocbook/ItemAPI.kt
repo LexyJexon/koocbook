@@ -1,14 +1,43 @@
 package com.example.koocbook
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
+
+import com.google.gson.*
+import java.lang.reflect.Type
+
+class ItemIngredientsDeserializer : JsonDeserializer<List<Any>> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): List<Any> {
+        val list = mutableListOf<Any>()
+        if (json != null && json.isJsonArray) {
+            val jsonArray = json.asJsonArray
+            for (element in jsonArray) {
+                when {
+                    element.isJsonPrimitive -> {
+                        if (element.asJsonPrimitive.isNumber) {
+                            list.add(element.asInt)
+                        } else if (element.asJsonPrimitive.isString) {
+                            list.add(element.asString)
+                        }
+                    }
+                }
+            }
+        }
+        return list
+    }
+}
 
 class ItemAPI(private val apiHelper: APIHelper) {
     private val gson = Gson()
 
     @Throws(IOException::class)
-    suspend fun createItem(image: String, title: String, desc: String, recipe: String, ingredients : Array<String>, cookTimeInMinutes: Int, authorId: Int): String {
+    suspend fun createItem(image: String, title: String, desc: String, recipe: String, ingredients : List<Any>, cookTimeInMinutes: Int, authorId: Int): String {
         // Реализация создания пользователя через APIHelper
         val url = "items"
         val allItems = getAllItems() // Получение списка всех пользователей
@@ -73,6 +102,56 @@ class ItemAPI(private val apiHelper: APIHelper) {
     }
 
     @Throws(IOException::class)
+    suspend fun getItemByAuthorId(authorId: Int): String {
+        val url = "items?authorId=$authorId"
+        return try {
+            apiHelper.getRequest(url).body?.string() ?: ""
+            // Обработка полученных данных
+        } catch (e: IOException) {
+            // Обработка ошибок сети или некорректных запросов
+            val msg = "Ошибка: ${e.message}"
+            println(msg)
+            msg
+        }
+    }
+
+    fun parseItemsFromJson(resp: String): List<Item> {
+        val gson = GsonBuilder()
+            .registerTypeAdapter(
+                object : TypeToken<List<Any>>() {}.type,
+                ItemIngredientsDeserializer()
+            )
+            .create()
+        // Предполагая, что jsonString - это ваш JSON-ответ
+        val listType = object : TypeToken<List<Map<String, Any>>>() {}.type
+        val items: List<Map<String, Any>> = gson.fromJson(resp, listType)
+
+        val updatedItems = items.map { item ->
+            val ingredients = item["ingredients"]
+            if (ingredients is String) {
+                val ingredientsArray = ingredients.split(",") // Преобразовать строку в массив строк
+                item.plus("ingredients" to ingredientsArray)
+            } else {
+                item
+            }
+        }
+        val itemList = updatedItems.map { item ->
+            Item(
+                item["id"].toString().toInt(),
+                item["image"].toString(),
+                item["title"].toString(),
+                item["description"].toString(),
+                item["recipe"].toString(),
+                (item["ingredients"] as List<*>).map { it.toString() }, // Преобразовать List<Any> в List<String>
+                (item["cookTimeInMinutes"].toString().toDoubleOrNull() ?: 0.0).toInt(),
+                (item["authorId"].toString().toDoubleOrNull() ?: 0.0).toInt(),
+            )
+        }
+
+        return itemList
+    }
+
+    @Throws(IOException::class)
     suspend fun updateItem(itemId: String, item : Item): String {
         // Реализация обновления информации о пользователе через APIHelper
         val url = "items/$itemId"
@@ -104,7 +183,7 @@ class ItemAPI(private val apiHelper: APIHelper) {
     }
 
     @Throws(IOException::class)
-    suspend fun getAllItems(): List<User> {
+    suspend fun getAllItems(): List<Item> {
         val url = "items"
         val response = apiHelper.getRequest(url)
         if (response.isSuccessful) {
@@ -116,7 +195,7 @@ class ItemAPI(private val apiHelper: APIHelper) {
         }
     }
 
-    private fun parseItems(responseBody: String): List<User> {
+    private fun parseItems(responseBody: String): List<Item> {
         // Парсинг JSON для получения списка пользователей
         val listType = object : TypeToken<List<Item>>() {}.type
         return gson.fromJson(responseBody, listType) // Значение по умолчанию или реальный список пользователей

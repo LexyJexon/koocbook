@@ -42,6 +42,8 @@
         <activity
             android:name=".ItemsActivity"
             android:exported="false" />
+        <activity android:name=".MyItemsActivity"
+            android:exported="false" />
         <activity
             android:name=".AuthActivity"
             android:exported="false" />
