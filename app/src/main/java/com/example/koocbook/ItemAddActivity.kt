@@ -3,6 +3,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -54,7 +56,7 @@ class ItemAddActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_add)
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         image = findViewById(R.id.add_item_image)
         uploadImageButton = findViewById(R.id.upload_img_btn)
@@ -158,6 +160,30 @@ class ItemAddActivity: AppCompatActivity() {
             val message = "Ошибка при загрузке изображения: ${it.message}"
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
+            R.id.add_recipe -> {
+                val intent = Intent(this, ItemAddActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.my_recipes -> {
+                val intent = Intent(this, MyItemsActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.search -> {
+                val intent = Intent(this, ItemSearchActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return true
     }
 
 }

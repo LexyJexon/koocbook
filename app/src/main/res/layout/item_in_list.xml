@@ -47,5 +47,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="#BF9D39"
-        android:text="Подробнее" />
+        android:text="@string/more" />
 </LinearLayout>

@@ -27,7 +27,7 @@
         android:paddingVertical="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-
+        android:backgroundTint="#BF9D39"
         />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -104,6 +104,7 @@
         android:paddingVertical="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#BF9D39"
         />
 
 

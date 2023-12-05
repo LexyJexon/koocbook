@@ -11,9 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ItemsAdapter(var items: List<Item>, var context: Context): RecyclerView.Adapter<ItemsAdapter.NewViewHolder>() {
+class NewItemsAdapter (private val items: List<Item>, private val context: Context) : RecyclerView.Adapter<NewItemsAdapter.NewViewHolder>() {
 
-    class NewViewHolder(view: View): RecyclerView.ViewHolder(view){
+    // ViewHolder содержит ссылки на представления элемента списка
+    class NewViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.item_image)
         val title: TextView = view.findViewById(R.id.item_title)
         val text: TextView = view.findViewById(R.id.item_text)
@@ -26,30 +27,23 @@ class ItemsAdapter(var items: List<Item>, var context: Context): RecyclerView.Ad
     }
 
     override fun getItemCount(): Int {
-        return items.count()
+        return items.size
     }
 
     override fun onBindViewHolder(holder: NewViewHolder, position: Int) {
-        holder.itemView.setBackgroundResource(R.drawable.round_corner)
-        holder.title.text = items[position].title
-        holder.text.text = items[position].desc
+        val currentItem = items[position]
 
-        /*val imageId = context.resources.getIdentifier(
-            items[position].image,
-            "drawable",
-            context.packageName
-        )
+        // Установка значений в представления элемента списка из объекта Item
+        holder.title.text = currentItem.title
+        holder.text.text = currentItem.desc
 
-        holder.image.setImageResource(imageId)
-        holder.image.foreground = ResourcesCompat.getDrawable(context.resources,R.drawable.round_corner, null )*/
-
+        // Использование Glide для загрузки изображения из Firebase Storage
         Glide.with(context)
-            .load(items[position].image)
-            .placeholder(android.R.drawable.ic_menu_gallery) // Заглушка, показываемая во время загрузки изображения
-            .error(R.drawable.no_icon) // Заглушка, показываемая в случае ошибки загрузки
+            .load(currentItem.image) // currentItem.image содержит ссылку на изображение
             .into(holder.image)
 
-        holder.btn.setOnClickListener{
+        holder.btn.setOnClickListener {
+            // Обработка нажатия на кнопку, если нужно
             val intent = Intent(context, ItemActivity::class.java)
 
             intent.putExtra("itemTitle", items[position].title)

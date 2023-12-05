@@ -4,13 +4,25 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ItemsActivity : AppCompatActivity() {
 
+    val gson = Gson()
+    private val apiHelper = APIHelper("https://6561e92ddcd355c0832451fd.mockapi.io/api/v1/")
+    private val itemApi = ItemAPI(apiHelper)
+
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_items)
@@ -18,9 +30,11 @@ class ItemsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val itemsList: RecyclerView = findViewById(R.id.items_to_list)
-        val items = arrayListOf<Item>()
+        var items = listOf<Item>()
+        itemsList.layoutManager = LinearLayoutManager(this)
+        itemsList.adapter = NewItemsAdapter(items, this)
 
-        items.add(Item(1, "borsh", "Борщ с курицей(с капустой)", "Предлагаю рецепт борща–лайт с курицей и свежей капустой. Легкий и вкусный домашний суп порадует всю семью. В борщ можно не добавлять картофель, тогда блюдо станет почти диетическим. ", "Ингредиенты:\n" +
+       /* items.add(Item(1, "borsh", "Борщ с курицей(с капустой)", "Предлагаю рецепт борща–лайт с курицей и свежей капустой. Легкий и вкусный домашний суп порадует всю семью. В борщ можно не добавлять картофель, тогда блюдо станет почти диетическим. ", "Ингредиенты:\n" +
                 "1 средняя свекла, тертая\n" +
                 "1 средняя морковь, тертая\n" +
                 "1 средний лук, мелко нарезанный\n" +
@@ -110,10 +124,22 @@ class ItemsActivity : AppCompatActivity() {
                 "\n" +
                 "2. Бешпармак готов к подаче! Традиционно его подают на большой доске, но вы можете сервировать так, как удобно.\n" +
                 "\n" +
-                "Приятного аппетита!",listOf(),120, 0))
+                "Приятного аппетита!",listOf(),120, 0))*/
 
-        itemsList.layoutManager = LinearLayoutManager(this)
-        itemsList.adapter = ItemsAdapter(items, this)
+        GlobalScope.launch(Dispatchers.IO) {
+            items = itemApi.getAllItems()
+           // Log.d("ITEM", resp)
+            for (item in items){
+                Log.d("ITEM", item.title + item.image + "\n")
+            }
+            withContext(Dispatchers.Main) {
+                itemsList.adapter = NewItemsAdapter(items, this@ItemsActivity)
+            }
+
+        }
+
+        //itemsList.layoutManager = LinearLayoutManager(this)
+        //itemsList.adapter = NewItemsAdapter(items, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -133,7 +159,8 @@ class ItemsActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.search -> {
-
+                val intent = Intent(this, ItemSearchActivity::class.java)
+                startActivity(intent)
             }
         }
         return true

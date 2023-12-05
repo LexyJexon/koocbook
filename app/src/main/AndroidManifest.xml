@@ -42,11 +42,15 @@
         <activity
             android:name=".ItemsActivity"
             android:exported="false" />
-        <activity android:name=".MyItemsActivity"
+        <activity
+            android:name=".MyItemsActivity"
             android:exported="false" />
         <activity
             android:name=".AuthActivity"
             android:exported="false" />
+        <activity
+            android:name=".ItemSearchActivity"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

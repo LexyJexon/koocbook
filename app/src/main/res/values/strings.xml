@@ -12,4 +12,8 @@
     <string name="upload_image">Загрузить фото</string>
     <string name="publicate">Опубликовать</string>
     <string name="cook_time">Время приготовления</string>
+    <string name="my_items">Мои рецепты</string>
+    <string name="search_item">Поиск</string>
+    <string name="more">Подробнее</string>
+    <string name="search_in_intems">Найти</string>
 </resources>

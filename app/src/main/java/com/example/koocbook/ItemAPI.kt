@@ -189,7 +189,7 @@ class ItemAPI(private val apiHelper: APIHelper) {
         if (response.isSuccessful) {
             val responseBody = response.body?.string() ?: ""
             // Преобразование JSON в список объектов Item
-            return parseItems(responseBody)
+            return parseItemsFromJson(responseBody)
         } else {
             throw IOException("Unexpected code $response")
         }
