@@ -106,6 +106,7 @@ class ItemAddActivity: AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         showToast("Рецепт добавлен")
                     }
+                    goToMyItems()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -159,6 +160,16 @@ class ItemAddActivity: AppCompatActivity() {
             // Обработка ошибки при загрузке
             val message = "Ошибка при загрузке изображения: ${it.message}"
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun goToMyItems(){
+        // Получение контекста активности внутри корутины
+        val context = withContext(Dispatchers.Main) { this@ItemAddActivity }
+
+        context.let {
+            val intent = Intent(this, MyItemsActivity::class.java)
+            startActivity(intent)
         }
     }
 
